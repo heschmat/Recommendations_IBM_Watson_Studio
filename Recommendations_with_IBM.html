@@ -14415,7 +14415,7 @@ The 3 most similar users to user 46 are:
     <span class="c1"># Initialize recommendations.</span>
     <span class="n">recs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="c1"># Loop over the articles viewed by similar users.</span>
-    <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users_similar</span><span class="p">[:</span><span class="mi">2</span><span class="p">]:</span>
+    <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users_similar</span><span class="p">:</span>
         <span class="c1"># Get the articles that user has viewed already.</span>
         <span class="n">article_ids</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_user_articles</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
         <span class="n">new_recs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">article_ids</span><span class="p">)</span>
@@ -15627,7 +15627,15 @@ The top 10 recommendations for user 20 are the following article names:
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Your response here.</strong> As common users between test &amp; train set are few, there are limited number of users that we could make predictions for, ergo SDV falls short.</p>
+<p><strong>Your response here.</strong></p>
+<ul>
+<li><p>Although the accuracy is high, we have to consider that the matrix is mostly consisted of zeros, i.e., no interaction than 1.</p>
+</li>
+<li><p>With the increase in the number of latent variables, the testset accuracy decreases. The reason is that %96.6 of the users are new and we are not able to make predictions for them -- so-called <code>cold start problem</code>. And by no means is 20 users enough so that our ML-based approach could have generalization power. This could be the reason behind the decrease in testset accuracy with the increase in the number of latent variables (when model gets more complicated, it also detects noise as singnal.)</p>
+</li>
+<li><p>As a result, the train-test approach is not viable to evaulate the predictive power of our recommendation engine. Methods such as A/B testing could come handy.</p>
+</li>
+</ul>
 
 </div>
 </div>
